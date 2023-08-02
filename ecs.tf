@@ -22,7 +22,7 @@ resource "aws_ecs_task_definition" "test-def" {
   requires_compatibilities = ["FARGATE"]
   cpu                      = var.fargate_cpu
   memory                   = var.fargate_memory
-  container_definitions    = data.template_file.testapp-rendered
+  container_definitions    = data.template_file.testapp.rendered
 }
 
 resource "aws_ecs_service" "test-service" {
