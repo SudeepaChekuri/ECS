@@ -5,7 +5,6 @@ resource "aws_ecs_cluster" "test-cluster" {
 data "template_file" "testapp" {
   template = file("./templates/image/image.json")
 
-
   vars = {
     app_image      = var.app_image
     app_port       = var.app_port
@@ -24,6 +23,7 @@ resource "aws_ecs_task_definition" "test-def" {
   memory                   = var.fargate_memory
   container_definitions    = data.template_file.testapp.rendered
 }
+
 
 resource "aws_ecs_service" "test-service" {
   name            = "testapp-service"
