@@ -3,7 +3,7 @@ resource "aws_ecs_cluster" "test-cluster" {
 }
 
 data "template_file" "testapp" {
-  template = ("./templates/image/image.json")
+  template = file("./templates/image/image.json")
 
   vars = {
     app_image      = var.app_image
@@ -27,6 +27,7 @@ resource "aws_ecs_task_definition" "test-def" {
     command = "echo '${data.template_file.testapp.rendered}'"
   }
 }
+
 
 resource "aws_ecs_service" "test-service" {
   name            = "testapp-service"
