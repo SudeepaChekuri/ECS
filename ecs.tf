@@ -22,13 +22,11 @@ resource "aws_ecs_task_definition" "test-def" {
   cpu                      = var.fargate_cpu
   memory                   = var.fargate_memory
   container_definitions    = data.template_file.testapp.rendered
+
+  provisioner "local-exec" {
+    command = "echo '${data.template_file.testapp.rendered}'"
+ }
 }
-
-output "rendered_container_definitions" {
-  value = data.template_file.testapp.rendered
-}
-
-
 
 resource "aws_ecs_service" "test-service" {
   name            = "testapp-service"
