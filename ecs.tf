@@ -24,6 +24,11 @@ resource "aws_ecs_task_definition" "test-def" {
   container_definitions    = data.template_file.testapp.rendered
 }
 
+output "rendered_container_definitions" {
+  value = data.template_file.testapp.rendered
+}
+
+
 
 resource "aws_ecs_service" "test-service" {
   name            = "testapp-service"
