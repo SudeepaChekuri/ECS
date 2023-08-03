@@ -3,7 +3,7 @@ resource "aws_ecs_cluster" "test-cluster" {
 }
 
 data "template_file" "testapp" {
-  template = ("./templates/image/image.json")
+  template = file("./templates/image/image.json")
 
   vars = {
     app_image      = var.app_image
@@ -21,11 +21,11 @@ resource "aws_ecs_task_definition" "test-def" {
   requires_compatibilities = ["FARGATE"]
   cpu                      = var.fargate_cpu
   memory                   = var.fargate_memory
-  container_definitions    = data.template_file.testapp.rendered
+  container_definitions = data.template_file.testapp.rendered
 
   provisioner "local-exec" {
     command = "echo '${data.template_file.testapp.rendered}'"
- }
+  }
 }
 
 resource "aws_ecs_service" "test-service" {
